@@ -1,0 +1,83 @@
+\hypertarget{a00055}{\subsection{\-S\-I\-C\-S\-Lo\-W\-M\-A\-C \-Implementation}
+\label{a00055}\index{\-S\-I\-C\-S\-Lo\-W\-M\-A\-C Implementation@{\-S\-I\-C\-S\-Lo\-W\-M\-A\-C Implementation}}
+}
+\hypertarget{a00055_macintro}{}\subsubsection{1. Introduction}\label{a00055_macintro}
+\-The phase1 \-M\-A\-C implemented to support the \-I\-Pv6/6\-Lo\-W\-P\-A\-N stack within the \-Contiki project is a light weight yet adequate beginning. \-This phase supports point to point data connectivity between a router device and an end device. \-The router is the \-R\-Z \-U\-S\-B stick from the \-A\-T\-A\-V\-R\-R\-Z\-R\-A\-V\-E\-N kit. \-The end node is the \-A\-V\-R \-Raven from the \-A\-T\-A\-V\-R\-R\-Z\-R\-A\-V\-E\-N kit. \-The picture below shows the complete \-A\-T\-A\-V\-R\-R\-Z\-R\-A\-V\-E\-N kit.
+
+
+
+\-The next phases will implement a commissioning concept including scan, and beacon generation. \-These kinds of primitives will allow dynamic network formation. \-Additionally, routing and low power/sleep will be implemented in following phases.\hypertarget{a00055_macprereqs}{}\subsubsection{2. Prerequisites}\label{a00055_macprereqs}
+\-See the \hyperlink{a00058}{\-Running \-Contiki with u\-I\-Pv6 and \-S\-I\-C\-Slowpan support on \-Atmel \-R\-A\-V\-E\-N hardware} for required systems setup configuration.\hypertarget{a00055_macoverview}{}\subsubsection{3. M\-A\-C Overview}\label{a00055_macoverview}
+\-This \-M\-A\-C follows the recommendations of \-R\-F\-C4944 with respect to data frames and acknowledgements (i.\-e. all data frames are acknowledged). \-At the time of this writing (phase 1) beacons (frames) and association events are not implemented. \-Additionally, data frames always carry both source and destination addresses. \-P\-A\-N\-I\-D compression (intra-\/pan) is not used so both source and destination \-P\-A\-N\-I\-D's are present in the frame.
+
+\-The \-S\-I\-C\-S\-Lo\-W\-M\-A\-C supports the \-I\-E\-E\-E 802.\-15.\-4 \-Data \-Request primitive and the \-Data \-Request \-Indication primitive. \-The data request primitive constructs a {\bfseries proper} 802.\-15.\-4 frame for transmission over the air while the data indication parses a received frame for processing in higher layers (6\-Lo\-W\-P\-A\-N). \-The source code for the mac can be found in the sicslowmac.\mbox{[}c,h\mbox{]} files.
+
+\-To assemble a frame a \-M\-A\-C header is constructed with certain presumptions\-:
+\begin{DoxyEnumerate}
+\item \-Long source and destination addresses are used.
+\item \-A hard coded \-P\-A\-N\-I\-D is used.
+\item \-A hard coded channel is used.
+\item \-Acknowledgements are used.
+\item \-Up to 3 auto retry attempts are used.
+\end{DoxyEnumerate}
+
+\-These and other variables are defined in mac.\-h.
+
+\-Given this data and the output of the 6\-Lo\-W\-P\-A\-N function, the \-M\-A\-C can construct the data frame and the \-Frame \-Control \-Field for transmission.
+
+\-An \-I\-E\-E\-E 802.\-15.\-4 \-M\-A\-C data frame consists of the fields shown below\-:
+
+
+
+\-The \-Frame \-Control \-Field (\-F\-C\-F) consist of the fields shown below\-:
+
+
+
+\begin{DoxyNote}{\-Note}
+\-The \-M\-A\-C address of each node is expected to be stored in \-E\-E\-P\-R\-O\-M and retrieved during the initialization process immediately after power on.
+\end{DoxyNote}
+\hypertarget{a00055_macrelationship}{}\subsubsection{4. 6\-Lo\-W\-P\-A\-N, M\-A\-C and Radio Relationship}\label{a00055_macrelationship}
+\-The output function of the 6\-Lo\-W\-P\-A\-N layer (sicslowpan.\-c) is the input function to the \-M\-A\-C (sicslowmac.\-c). \-The output function of the \-M\-A\-C is the input function of the radio (radio.\-c). \-When the radio receives a frame over the air it processes it in its \-T\-R\-X\-\_\-\-E\-N\-D event function. \-If the frame passes address and \-C\-R\-C filtering it is queued in the \-M\-A\-C event queue. \-Subsequently, when the \-M\-A\-C task is processed, the received frame is parsed and handed off to the 6\-Lo\-W\-P\-A\-N layer via its input function. \-These relationships are depicted below\-:
+
+\hypertarget{a00055_maccode}{}\subsubsection{5. Source Code Location}\label{a00055_maccode}
+\-The source code for the \-M\-A\-C, \-Radio and support functions is located in the path\-:
+\begin{DoxyItemize}
+\item $\backslash$cpu$\backslash$avr$\backslash$radio
+\begin{DoxyItemize}
+\item $\backslash$rf230
+\item $\backslash$mac
+\item $\backslash$ieee-\/manager
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+
+\begin{DoxyEnumerate}
+\item \-The $\backslash$rf230 folder contains the low level \-H\-A\-L drivers to access and control the radio as well as the low level frame formatting and parsing functions.
+\item \-The $\backslash$mac folder contains the \-M\-A\-C layer code, the generic \-M\-A\-C initialization functions and the defines mentioned in section 3.
+\item \-The $\backslash$ieee-\/manager folder contains the access functions for various \-P\-I\-B variables and radio functions such as channel setting.
+\end{DoxyEnumerate}
+
+\-The source code for the \-Raven platforms is located in the path\-:
+\begin{DoxyItemize}
+\item $\backslash$platform
+\begin{DoxyItemize}
+\item $\backslash$avr-\/raven
+\item $\backslash$avr-\/ravenlcd
+\item $\backslash$avr-\/ravenusb
+\end{DoxyItemize}
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item \-The $\backslash$avr-\/raven folder contains the source code to initialize and start the raven board.
+\item \-The $\backslash$avr-\/ravenlcd folder contains the complete source code to initialize and start the \-A\-Tmega3209\-P on raven board in a user interface capacity. \-See the \-Doxygen generated documentation for more information.
+\item \-The $\backslash$avr-\/ravenusb folder contains the source code to initialize and start the raven \-U\-S\-B stick as a network interface on either \-Linux or \-Windows platforms. \-Note that appropriate drivers are located in the path\-:
+\begin{DoxyItemize}
+\item $\backslash$cpu$\backslash$avr$\backslash$dev$\backslash$usb$\backslash$\-I\-N\-F
+\end{DoxyItemize}
+\end{DoxyEnumerate}\hypertarget{a00055_macavrstudio}{}\subsubsection{6. A\-V\-R Studio Project Location}\label{a00055_macavrstudio}
+\-There are two projects that utilize the \-Logo \-Certified \-I\-Pv6 and 6\-Lo\-W\-P\-A\-N layers contributed to the \-Contiki project by \-Cisco. \-These are ping-\/ipv6and webserver-\/ipv6 applications. \-They are located in the following paths\-:
+\begin{DoxyItemize}
+\item $\backslash$examples$\backslash$webserver-\/ipv6 and
+\item $\backslash$examples$\backslash$ping-\/ipv6
+\end{DoxyItemize}
+
+\-The ping-\/ipv6 application will allow the \-U\-S\-B stick to ping the \-Raven board while the webserver-\/ipv6 application will allow the raven board to serve a web page. \-When the ravenlcd-\/3290 application is programmed into the \-A\-Tmega3290\-P on the \-Raven board, the \-Raven board can ping the \-U\-S\-B stick and it can periodically update the temperature in the appropriate web page when served. 

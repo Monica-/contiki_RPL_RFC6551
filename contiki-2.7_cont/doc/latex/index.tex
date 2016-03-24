@@ -1,0 +1,59 @@
+\-Contiki is an open source, highly portable, multi-\/tasking operating system for memory-\/efficient networked embedded systems and wireless sensor networks. \-Contiki is designed for microcontrollers with small amounts of memory. \-A typical \-Contiki configuration is 2 kilobytes of \-R\-A\-M and 40 kilobytes of \-R\-O\-M.
+
+\-Contiki provides \-I\-P communication, both for \-I\-Pv4 and \-I\-Pv6. \-Contiki and its u\-I\-Pv6 stack are \-I\-Pv6 \-Ready \-Phase 1 certified and therefor has the right to use the \-I\-Pv6 \-Ready silver logo.
+
+\-Many key mechanisms and ideas from \-Contiki have been widely adopted in the industry. \-The u\-I\-P embedded \-I\-P stack, originally released in 2001, is today used by hundreds of companies in systems such as freighter ships, satellites and oil drilling equipment. \-Contiki and u\-I\-P are recognized by the popular nmap network scanning tool. \-Contiki's protothreads, first released in 2005, have been used in many different embedded systems, ranging from digital \-T\-V decoders to wireless vibration sensors.
+
+\-Contiki introduced the idea of using \-I\-P communication in low-\/power sensor networks networks. \-This subsequently lead to an \-I\-E\-T\-F standard and the \-I\-P\-S\-O \-Aliance, an international industry alliance. \-T\-I\-M\-E \-Magazine listed \-Internet of \-Things and the \-I\-P\-S\-O \-Alliance as the 30th most important innovation of 2008.
+
+\-Contiki is developed by a group of developers from industry and academia lead by \-Adam \-Dunkels from the \-Swedish \-Institute of \-Computer \-Science. \-The \-Contiki team currently consists of sixteen developers from \-S\-I\-C\-S, \-S\-A\-P \-A\-G, \-Cisco, \-Atmel, \-New\-A\-E and \-T\-U \-Munich.
+
+\-Contiki contains two communication stacks\-: \hyperlink{a00060}{u\-I\-P} and \hyperlink{a00054}{\-Rime}. u\-I\-P is a small \-R\-F\-C-\/compliant \-T\-C\-P/\-I\-P stack that makes it possible for \-Contiki to communicate over the \-Internet. \-Rime is a lightweight communication stack designed for low-\/power radios. \-Rime provides a wide range of communication primitives, from best-\/effort local area broadcast, to reliable multi-\/hop bulk data flooding.
+
+\-Contiki runs on a variety of platform ranging from embedded microcontrollers such as the \-M\-S\-P430 and the \-A\-V\-R to old homecomputers. \-Code footprint is on the order of kilobytes and memory usage can be configured to be as low as tens of bytes.
+
+\-Contiki is written in the \-C programming language and is freely available as open source under a \-B\-S\-D-\/style license.\hypertarget{index_contiki-mainpage-tcpip}{}\subsection{\-T\-C\-P/\-I\-P}\label{index_contiki-mainpage-tcpip}
+\-Contiki includes the u\-I\-P \-T\-C\-P/\-I\-P stack (\href{http://www.sics.se/~adam/uip/}{\tt http\-://www.\-sics.\-se/$\sim$adam/uip/}) that provides \-Contiki with \-T\-C\-P/\-I\-P networking support. u\-I\-P provides the protocols \-T\-C\-P, \-U\-D\-P, \-I\-P, and \-A\-R\-P.
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{a00060}{\-The u\-I\-P \-T\-C\-P/\-I\-P stack documentation} 
+
+\-The \-Contiki/u\-I\-P interface 
+
+\-Protosockets library
+\end{DoxySeeAlso}
+\hypertarget{index_contiki-mainpage-rime}{}\subsection{\-Rime}\label{index_contiki-mainpage-rime}
+\-Rime is a lightweight communication stacks designed for low-\/power radios. \-Rime provides a wide range of communication primitives suitable for implementing communication-\/bound applications or network protocols.
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{a00054}{\-The \-Rime \-Communication \-Stack}
+\end{DoxySeeAlso}
+\hypertarget{index_contiki-mainpage-threads}{}\subsection{\-Multi-\/threading and protothreads}\label{index_contiki-mainpage-threads}
+\-Contiki is based on an event-\/driven kernel but provides support for both multi-\/threading and a lightweight stackless thread-\/like construct called protothreads.
+
+\begin{DoxySeeAlso}{\-See also}
+\-Contiki processes 
+
+\hyperlink{a00052}{\-Protothreads} 
+
+\-Event timers 
+
+\-Optional multi-\/threading
+\end{DoxySeeAlso}
+\hypertarget{index_contiki-mainpage-lib}{}\subsection{\-Libraries}\label{index_contiki-mainpage-lib}
+\-Contiki provides a set of convenience libraries for memory management and linked list operations.
+
+\begin{DoxySeeAlso}{\-See also}
+\-Simple timer library 
+
+\-Memory block management 
+
+\-Linked list library
+\end{DoxySeeAlso}
+\hypertarget{index_contiki-mainpage-getting-started}{}\subsection{\-Getting started with Contiki}\label{index_contiki-mainpage-getting-started}
+\-Contiki is designed to run on many different \hyperlink{a00051}{platforms}. \-It is also possible to compile and build both the \-Contiki system and \-Contiki applications on many different development platforms.
+
+\-See \-Getting started with \-Contiki for the \-E\-S\-B platform \hypertarget{index_contiki-mainpage-building}{}\subsection{\-Building the Contiki system and its applications}\label{index_contiki-mainpage-building}
+\-The \-Contiki build system is designed to make it easy to compile \-Contiki applications for either to a hardware platform or into a simulation platform by simply supplying different parameters to the {\ttfamily make} command, without having to edit makefiles or modify the application code.
+
+\-See \hyperlink{a00044}{\-The \-Contiki build system} 

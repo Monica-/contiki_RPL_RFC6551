@@ -1,0 +1,360 @@
+\hypertarget{a00058}{\subsection{\-Running \-Contiki with u\-I\-Pv6 and \-S\-I\-C\-Slowpan support on \-Atmel \-R\-A\-V\-E\-N hardware}
+\label{a00058}\index{\-Running Contiki with u\-I\-Pv6 and S\-I\-C\-Slowpan support on Atmel R\-A\-V\-E\-N hardware@{\-Running Contiki with u\-I\-Pv6 and S\-I\-C\-Slowpan support on Atmel R\-A\-V\-E\-N hardware}}
+}
+
+
+\-This tutorial explains how to run \-Contiki with \-I\-Pv6 and 6lowpan support on \-Atmel \-R\-A\-V\-E\-N hardware.  
+
+
+\-This tutorial explains how to run \-Contiki with \-I\-Pv6 and 6lowpan support on \-Atmel \-R\-A\-V\-E\-N hardware. \hypertarget{a00058_toc}{}\subsubsection{\-Table of contents}\label{a00058_toc}
+\hyperlink{a00058_introduction}{\-Introduction}\par
+ \hyperlink{a00058_hardware}{\-Hardware requirements}\par
+ \hyperlink{a00058_software}{\-Software requirements}\par
+ \hyperlink{a00058_overview}{\-Demo \-Overview}\par
+ \hyperlink{a00058_installation}{\-Compiling, installing, configuring}\par
+ \hyperlink{a00058_running}{\-Running the basic demo}\par
+ \hyperlink{a00058_advanced}{\-Advanced use}\par
+ \hyperlink{a00058_issues}{\-Known issues}\par
+ \hyperlink{a00058_annex}{\-Annex}\par
+
+
+
+
+ \hypertarget{a00058_introduction}{}\subsubsection{\-Introduction}\label{a00058_introduction}
+\-This tutorial explains how to run \-Contiki with \-I\-Pv6 and 6lowpan support on \-Atmel \-R\-A\-V\-E\-N evaluation kit (\-A\-T\-A\-V\-R\-R\-Z\-R\-A\-V\-E\-N) hardware. \-We present basic example system architecture and application scenarios, as well as instructions to run more advanced demos.
+
+
+
+ \hypertarget{a00058_hardware}{}\subsubsection{\-Hardware requirements}\label{a00058_hardware}
+\-To run the demo, you will need at least \begin{DoxyItemize}
+\item one \-A\-V\-R \-R\-A\-V\-E\-N board, which embeds an \-A\-Tmega1284\-P and an \-A\-Tmega3290\-P micro controller (\-M\-C\-U) as well as an \-A\-T86\-R\-F230 802.\-15.\-4 radio chip. \item one \-R\-Z \-U\-S\-B stick, which embeds an \-A\-T90\-U\-S\-B1287 \-M\-C\-U and an \-A\-T86\-R\-F230 802.\-15.\-4 radio chip. \item one \-P\-C running \-Windows to program the chips. \-For the demo itself, a \-P\-C running \-Linux or \-Windows. \item one \-On-\/chip programming platform. \-We recommend \-Atmel \-J\-T\-A\-G\-I\-C\-E mk\-I\-I.\end{DoxyItemize}
+\begin{DoxyNote}{\-Note}
+\-Links to detailed hardware documentation are in \hyperlink{a00058_annex_hardware}{\-Annex -\/ \-Atmel products detailed documentation}
+\end{DoxyNote}
+
+
+ \hypertarget{a00058_software}{}\subsubsection{\-Software requirements}\label{a00058_software}
+\-To install the demo you need\-: \begin{DoxyItemize}
+\item \-Contiki 2.\-3 or later source code, installed in a directory. \-In the rest of this tutorial we assume the directory is c\-:/contiki \item \-Cygwin with \char`\"{}make\char`\"{} utility installed. \item \-A\-V\-R \-Studio 4.\-14 or later \item \-Win\-A\-V\-R20080610 or later \item \-Windows drivers installed for the \-J\-T\-A\-G\-I\-C\-E mk\-I\-I.\end{DoxyItemize}
+\-Instructions to install these tools are in the section \hyperlink{a00058_annex_software}{\-Software setup details}.\par
+
+
+\-To run the demo, you need\-: \begin{DoxyItemize}
+\item one \-P\-C running \-Linux with kernel 2.\-6.\-24 or later, with support for the following kernel modules\-: \-I\-Pv6, usbnet, cdc\-\_\-ether, cdc\-\_\-acm, rndis\-\_\-wlan. \item \-O\-R one \-P\-C running \-Windows with \-I\-Pv6 support. \-If you use \-Windows \-X\-P, you need \-Service \-Pack 3 installed.\end{DoxyItemize}
+\begin{DoxyNote}{\-Note}
+\-On windows \-X\-P, if ipv6 support is not enabled, enable it by typing in a shell\-: \begin{DoxyVerb}
+ipv6 install
+\end{DoxyVerb}
+
+\end{DoxyNote}
+
+
+ \hypertarget{a00058_overview}{}\subsubsection{\-Demo Overview}\label{a00058_overview}
+\hypertarget{a00058_overview_architecture}{}\paragraph{\-Network Architecture}\label{a00058_overview_architecture}
+\-The network comprises\-: \begin{DoxyItemize}
+\item a \-P\-C acting as an \-I\-Pv6 router with an 802.\-15.\-4 interface and an \-Ethernet interface. \item a \-R\-A\-V\-E\-N board acting as an \-I\-Pv6 host.\end{DoxyItemize}
+\-In the basic demo, you can\-: \begin{DoxyItemize}
+\item \-Ping the \-R\-A\-V\-E\-N \-Board from the router \item \-Ping the router from the \-R\-A\-V\-E\-N board, using the \-R\-A\-V\-E\-N board menu \item \-Browse the web server running on the \-R\-A\-V\-E\-N board. \-The server displays the live temperature measured from the board temperature sensor\end{DoxyItemize}
+ 
+
+ \hypertarget{a00058_installation}{}\subsubsection{\-Compiling, installing, configuring}\label{a00058_installation}
+\hypertarget{a00058_installation_compiling}{}\paragraph{\-Compiling the binaries for R\-A\-V\-E\-N and R\-Z U\-S\-B stick}\label{a00058_installation_compiling}
+\-The binaries needed are\-: \begin{DoxyItemize}
+\item c\-:/contiki/examples/webserver-\/ipv6/webserver6.elf file for the \-R\-A\-V\-E\-N board \-A\-Tmega1284\-P \item c\-:/contiki/platform/avr-\/ravenlcd/ravenlcd\-\_\-3290.elf file for the \-R\-A\-V\-E\-N board \-A\-Tmega3290\-P \item c\-:/contiki/examples/ravenusbstick/ravenusbstick.elf file for the \-R\-Z \-U\-S\-B \-Stick \-A\-T90\-U\-S\-B1287\end{DoxyItemize}
+\-To compile each of them, type in \-Cygwin\-: \begin{DoxyVerb}
+cd c:/contiki/examples/webserver-ipv6-raven
+make
+\end{DoxyVerb}
+ \begin{DoxyVerb}
+cd c:/contiki/platform/avr-ravenlcd
+make
+\end{DoxyVerb}
+ \begin{DoxyVerb}
+cd c:/contiki/examples/ravenusbstick
+make
+\end{DoxyVerb}
+\hypertarget{a00058_installation_hw}{}\paragraph{\-Installing the hardware}\label{a00058_installation_hw}
+\-To power the \-R\-A\-V\-E\-N, put the \-E\-X\-T/\-B\-A\-T jumper in \-B\-A\-T position. \-This will enable power on batteries. \-If you want to power the \-R\-A\-V\-E\-N externally, check instructions in \hyperlink{a00058_advanced_externalboard}{\-Using an external board for power and \-Debug}.
+
+\-The \-R\-Z \-U\-S\-B \-Stick needs to be plugged in the \-P\-C you will run the demo on. \-If you plan to run the demo on a \-Windows \-P\-C, you will need to install drivers once contiki is loaded on the stick. \-Until then, you can exit any driver installation popup.\hypertarget{a00058_installation_loading}{}\paragraph{\-Programming the boards}\label{a00058_installation_loading}
+{\bfseries \-What you need to do}\par
+
+
+\begin{DoxyItemize}
+\item \-On the \-R\-A\-V\-E\-N board, program the binaries on both \-A\-V\-R \-A\-Tmega. \item \-On the \-R\-Z \-U\-S\-B \-Stick, load the binary on the \-A\-T90\-U\-S\-B1287\end{DoxyItemize}
+{\bfseries \-Hardware connections}\par
+ \begin{DoxyItemize}
+\item \-Connect the \-J\-T\-A\-G connectors to the \-J\-T\-A\-G\-I\-C\-E as described in the picture below.\end{DoxyItemize}
+ \begin{DoxyItemize}
+\item \-Connect the \-J\-T\-A\-G\-I\-C\-E mk\-I\-I to a \-Windows \-P\-C through \-U\-S\-B. \item \-To program (load) each \-A\-V\-R, you will need to connect the \-J\-T\-A\-G\-I\-C\-E \-J\-T\-A\-G connector to the \-J\-T\-A\-G pins corresponding to the \-A\-V\-R you want to program, as shown in the picture below.\end{DoxyItemize}
+
+
+{\bfseries \-To load the binary on each \-A\-V\-R in \-Windows}\par
+
+
+\begin{DoxyItemize}
+\item \-Launch \-A\-V\-R \-Studio and exit any popup window. \item \-Connect the \-J\-T\-A\-G pins of the \-J\-T\-A\-G\-I\-C\-E into the \-J\-T\-A\-G connector of the target processor. \item \-In \-A\-V\-R \-Studio, click on \char`\"{}\-Tools\char`\"{}-\/$>$\char`\"{}\-Program A\-V\-R\char`\"{}-\/$>$\char`\"{}\-Auto Connect\char`\"{} \item \-Go to the \char`\"{}\-Main tab\char`\"{} \item \-In the \char`\"{}\-Programming mode and target settings\char`\"{} list, select \-J\-T\-A\-G \item \-Select the processor type in the \char`\"{}\-Device\char`\"{} list and click \char`\"{}\-Read Signature\char`\"{}. \-If the \-Device signature is read properly, it means \-A\-V\-R \-Studio is properly connected to the \-A\-V\-R. \item \-Go to the \char`\"{}\-Program\char`\"{} tab \item \-In the \char`\"{}\-E\-L\-F Production file format\char`\"{} section, browse to the binary, then click program\end{DoxyItemize}
+\begin{DoxyVerb}
+For webserver6.elf, set the processor to ATmega1284P
+For ravenlcd_3290.elf, set the processor to ATmega3290P
+For ravenusbstick.elf, set the processor to AT90USB1287
+
+\end{DoxyVerb}
+
+
+\-Once the \-R\-Z \-U\-S\-B \-Stick is programmed, unplug it from the \-P\-C. \-Note this programmed the fuses, \-E\-E\-P\-R\-O\-M, and \-F\-L\-A\-S\-H all at once.
+
+
+
+ \hypertarget{a00058_running}{}\subsubsection{\-Running the basic demo}\label{a00058_running}
+\hypertarget{a00058_running_router}{}\paragraph{\-Setting up the router}\label{a00058_running_router}
+{\bfseries \-On \-Linux}\par
+ \-Plug the \-R\-Z \-U\-S\-B \-Stick in the \-P\-C. \-It should appear as a \-U\-S\-B network interface (e.\-g. usb0).
+
+usb0 should automatically get an \-I\-Pv6 link local address, i.\-e. fe80\-:\-:0012\-:13ff\-:fe14\-:1516/64. \-Check this is the case by typing \begin{DoxyVerb}
+ifconfig
+\end{DoxyVerb}
+ and checking the addresses of interface usb0
+
+\-If it does not, add it manually\-: \begin{DoxyVerb}
+ip -6 address add fe80::0012:13ff:fe14:1516/64 scope link dev usb0
+\end{DoxyVerb}
+
+
+\-Configure the \-I\-P addresses on usb0 \begin{DoxyVerb}
+ip -6 address add aaaa::1/64 dev usb0
+\end{DoxyVerb}
+
+
+\-Install the radvd deamon and configure it so the usb0 interface advertises the aaaa\-:\-:/64 prefix as on link and usable for address autoconfiguration.
+
+\-Radvd configuration (usually in /etc/radvd.conf) \begin{DoxyVerb}
+interface usb0
+{
+    AdvSendAdvert on;
+    AdvLinkMTU 1280;
+    AdvCurHopLimit 128;
+    AdvReachableTime 360000;
+    MinRtrAdvInterval 100;
+    MaxRtrAdvInterval 150;
+    AdvDefaultLifetime 200;
+    prefix AAAA::/64
+    {
+        AdvOnLink on;
+        AdvAutonomous on;
+        AdvPreferredLifetime 4294967295; 
+        AdvValidLifetime 4294967295; 
+    };
+};
+\end{DoxyVerb}
+ \begin{DoxyNote}{\-Note}
+\-This values have been carefuly chosen to work on platform using a 16bit clock.
+\end{DoxyNote}
+\-Restart the radvd daemon. \-Example command\-: \begin{DoxyVerb}
+/etc/init.d/radvd restart
+\end{DoxyVerb}
+
+
+\-If you get a message that radvd won't start as forwarding isn't enabled, you can run this as root\-:
+
+\begin{DoxyVerb}
+echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
+\end{DoxyVerb}
+
+
+{\bfseries \-On \-Windows}\par
+
+
+\-Plug the \-R\-Z \-U\-S\-B \-Stick in the \-P\-C. \-A \char`\"{}new hardware installation\char`\"{} window should pop up. \-If it does not, go to \char`\"{}\-Control Panel\char`\"{}-\/$>$ \char`\"{}\-Add Hardware\char`\"{}. \-Choose \char`\"{}\-Install the driver manually\char`\"{}, then select the search path \-C\-:$\backslash$contiki$\backslash$cpu$\backslash$avr$\backslash$dev$\backslash$usb$\backslash$\-I\-N\-F. \-Finish the installation.
+
+\-You now need to get the \char`\"{}interface index\char`\"{} of the \-U\-S\-B \-Stick interface (noted \mbox{[}interface index\mbox{]} in the following) and the \-Ethernet interface (noted \mbox{[}ethernet interface index\mbox{]} in the following).
+
+\-In a \-D\-O\-S or \-Cygwin shell, type \begin{DoxyVerb}
+ipv6 if
+\end{DoxyVerb}
+
+
+\-As an example, the output might look something like this\-:
+
+\begin{DoxyVerb}
+...
+Interface 7: Ethernet
+ ...
+ link-layer address: 02-12-13-14-15-16
+ preferred link-local fe80::12:13ff:fe14:1516, life infinite
+ ...
+Interface 4: Ethernet: Local Area Connection
+ ...
+ link-layer address: 00-1e-37-16-5d-83
+ preferred link-local fe80::21e:37ff:fe16:5d83, life infinite
+ ...
+...
+\end{DoxyVerb}
+
+
+\-Note the link-\/layer address associated with interface 7 is the \-U\-S\-B \-Stick. \-Hence \mbox{[}interface index\mbox{]} is 7, \mbox{[}ethernet interface index\mbox{]} is 4 and \mbox{[}ethernet link-\/local address\mbox{]} is fe80\-:\-:21e\-:37ff\-:fe16\-:5d83.
+
+\-Then you need to \begin{DoxyItemize}
+\item \-Set the \-U\-S\-B \-Stick interface as an advertising interface \item \-Configure a global \-I\-P address on the \-U\-S\-B \-Stick interface \item \-Add a default route through the \-Ethernet interface \item \-Set the aaaa\-:\-:/64 prefix as \char`\"{}on link\char`\"{} and published on the \-U\-S\-B \-Stick interface.\end{DoxyItemize}
+\-To do so, type\-: 
+\begin{DoxyCode}
+ipv6 ifc [interface index] advertises forwards
+ipv6 adu [interface index]/aaaa::1
+ipv6 rtu ::/0 [ethernet interface index]/[ethernet link-local address] publish
+ipv6 rtu aaaa::/64 [interface index] publish
+\end{DoxyCode}
+\hypertarget{a00058_running_raven}{}\paragraph{\-Booting the R\-A\-V\-E\-N boards}\label{a00058_running_raven}
+\-Reboot the \-R\-A\-V\-E\-N board. \-The \-P\-C sends router advertisements and the \-R\-A\-V\-E\-N \-Board configures an \-I\-Pv6 global address based on them. \-The \-P\-C global addresses were set above. \-Communication is ready.\hypertarget{a00058_running_ping1}{}\paragraph{\-Pinging the R\-A\-V\-E\-N board from the router}\label{a00058_running_ping1}
+\-On \-Windows (\-Cygwin shell) or \-Linux, type \begin{DoxyVerb}
+ping6 -n 5 aaaa::11:22ff:fe33:4455
+\end{DoxyVerb}
+ or \begin{DoxyVerb}
+ping6 -s aaaa::1 aaaa::11:22ff:fe33:4455
+\end{DoxyVerb}
+ \-The router is sending 5 echo requests to the \-R\-A\-V\-E\-N board. \-The \-R\-A\-V\-E\-N board answers with 5 echo replies.\hypertarget{a00058_running_ping2}{}\paragraph{\-Pinging the router from the R\-A\-V\-E\-N board}\label{a00058_running_ping2}
+\-To send a ping from the \-R\-A\-V\-E\-N to the router you need to use the \-R\-A\-V\-E\-N's joystick and \-L\-C\-D screen. \-Initially, the \-L\-C\-D screen should print \-C\-O\-N\-T\-I\-K\-I -\/ 6\-L\-O\-W\-P\-A\-N in a loop. \-You can navigate the \-L\-C\-D menu by using the small joystick just below its lower right corner. \-To 'ping' push the joystick twice to the right. \-The \-R\-A\-V\-E\-N board sends 4 echo requests to the router, which answers by 4 echo replies.\par
+ \-For more information about the \-L\-C\-D menu, please see lcdraven.\hypertarget{a00058_running_browse}{}\paragraph{\-Browsing the R\-A\-V\-E\-N board web server}\label{a00058_running_browse}
+\-In a \-Web browser, point to \href{http://}{\tt http\-://}\mbox{[}aaaa\-:\-:0011\-:22ff\-:fe33\-:4455\mbox{]}. \-Then click on '\-Sensor \-Readings'. \-If no temperature is displayed it means that you need to start the temperature update process on the \-R\-A\-V\-E\-N. \-To do so you must use the \-R\-A\-V\-E\-N's \-L\-C\-D menu and joystick. \-Starting from the \-C\-O\-N\-T\-I\-K\-I -\/ 6\-L\-O\-W\-P\-A\-N display navigate to \-T\-E\-M\-P and then to \-S\-E\-N\-D. \-You can pick either \-O\-N\-C\-E or \-A\-U\-T\-O, but in any case you always need to reload the webpage to see the latest temperature reading. \par
+ \-For more information about the \-L\-C\-D menu, please see lcdraven.
+
+
+
+ \hypertarget{a00058_advanced}{}\subsubsection{\-Advanced use}\label{a00058_advanced}
+\hypertarget{a00058_advanced_externalboard}{}\paragraph{\-Using an external board for power and Debug}\label{a00058_advanced_externalboard}
+\-To power the \-R\-A\-V\-E\-N boards externally and enable debug output on \-R\-S232, you can use the stk500 board together with the raven.
+
+\-Power\-: \begin{DoxyItemize}
+\item \-Set the '\-E\-X\-T/\-B\-A\-T' jumper on the \-R\-A\-V\-E\-N board to \-E\-X\-T \item \-Attach pin 2 on the bottom strip to \-G\-N\-D of your \-S\-T\-K500 \item \-Attach pin 1 on the bottom strip to \-V\-T\-G of your \-S\-T\-K500 \item \-Power the \-S\-T\-K500\end{DoxyItemize}
+\-Debug \-Connection \begin{DoxyItemize}
+\item \-Attach pin 4 of the leftmost \-I/\-O header to pin '\-T\-X\-D' on your \-S\-T\-K500 \item \-Connect the \-S\-T\-K500's \char`\"{}\-R\-S232\-S\-P\-A\-R\-E\char`\"{} port to a \-R\-S232 port on a \-P\-C \item \-Connect a terminal program (e.\-g. hyper terminal on \-Windows, minicom on \-Linux) to the \-R\-S232 port on the \-P\-C at 57600 \-Baud, with parity 8\-N1, no flow control \item \-The raven board will output debug messages to the terminal\end{DoxyItemize}
+\begin{DoxyNote}{\-Note}
+\-To enable specific debugging messages, edit the source file you are interested in (e.\-g. core/net/uip-\/nd6-\/io.\-c for \-Neighbor \-Discovery messages debug) and set the macro \-D\-E\-B\-U\-G to 1. \-Then recompile the code, load the new binary on the board and restart the \-R\-A\-V\-E\-N.
+\end{DoxyNote}
+\-The following image shows this connection, with the red and black being \-V\-C\-C and \-G\-N\-D. \-The green wire is debug out\-:
+
+
+
+\begin{DoxyNote}{\-Note}
+\-The output to the \-R\-S232 converts will only be about 3\-V, but they are expecting a signal swinging up to \-V\-T\-G, or by default 5\-V. \-You may have to set \-V\-T\-G to 3.\-3\-V and power the \-Raven from another source, making sure the \-G\-N\-Ds of both the \-S\-T\-K500 and your external source are connected together.
+\end{DoxyNote}
+\hypertarget{a00058_advanced_details}{}\paragraph{\-Understanding the setup}\label{a00058_advanced_details}
+\-There is no widely available 802.\-15.\-4 and 6lowpan stack for \-P\-Cs. \-As a temporary solution and to be able to connect \-I\-Pv6 hosts such as \-R\-A\-V\-E\-N boards to \-I\-P networks, we implemented a \char`\"{}bridge\char`\"{} function on the \-R\-Z \-U\-S\-B \-Stick. \-The \-R\-Z \-U\-S\-B stick bridges 802.\-15.\-4 packets to \-Ethernet (\-The \-Ethernet interface is emulated on the \-U\-S\-B port).
+
+\-As \-Ethernet frames and addresses are very different from 802.\-15.\-4 ones, a few adjustements are needed on addresses and some neighbor discovery packets. \-As a consequence, 802.\-15.\-4 \-M\-A\-C addresses configured on both the \-R\-A\-V\-E\-N boards and the \-R\-Z \-U\-S\-B stick must have the format\-:\par
+ \begin{DoxyVerb}
+x2:xx:xx:ff:fe:xx:xx:xx
+\end{DoxyVerb}
+ where x can take any hexadecimal value. \-Read the section below to change the \-M\-A\-C address on one device.\hypertarget{a00058_advanced_eeprom}{}\paragraph{\-Change a device M\-A\-C address}\label{a00058_advanced_eeprom}
+\-You can change the \-M\-A\-C address of a \-R\-A\-V\-E\-N board or the \-R\-Z \-U\-S\-B \-Stick by setting the 8 first bytes of the \-E\-E\-P\-R\-O\-M, following the convention above. \-You can do this three ways.
+
+\-The first is to set \-E\-E\-P\-R\-O\-M bytes directly in an \-A\-V\-R \-Studio project, in \-Debug mode
+
+\begin{DoxyItemize}
+\item compile the binary file for \-R\-A\-V\-E\-N, as explained in \hyperlink{a00058_installation}{\-Compiling, installing, configuring} \item \-Connect the \-J\-T\-A\-G pins of the \-J\-T\-A\-G\-I\-C\-E into the \-J\-T\-A\-G connector of the target processor. \item \-I\-N \-A\-V\-R \-Studio, go to \-File-\/$>$open, select the binary just created \item \-The \-Debug mode should start \item \-Click on \-View-\/$>$memory \item select \-E\-E\-P\-R\-O\-M in the menu, then just type in the first 8 bytes the target \-M\-A\-C address\end{DoxyItemize}
+\-The second is to reprogram the whole \-E\-E\-P\-R\-O\-M individually from the \-Flash and \-Fuses.
+
+\begin{DoxyItemize}
+\item \-Connect the \-J\-T\-A\-G pins of the \-J\-T\-A\-G\-I\-C\-E into the \-J\-T\-A\-G connector of the target processor. \item \-In \-A\-V\-R \-Studio, click on \char`\"{}\-Tools\char`\"{}-\/$>$\char`\"{}\-Program A\-V\-R\char`\"{}-\/$>$\char`\"{}\-Auto Connect\char`\"{} \item \-Go to the \char`\"{}\-Program\char`\"{} tab \item \-In the \char`\"{}\-E\-E\-P\-R\-O\-M\char`\"{} section, click on \char`\"{}\-Read\char`\"{} and save the \-E\-E\-P\-R\-O\-M content in a file (in hex format) \item \-Edit this file with a text editor, change the value of the first 8 bytes, save \item \-In the \char`\"{}\-E\-E\-P\-R\-O\-M\char`\"{} section, check the path to the \char`\"{}\-Input Hex file\char`\"{} is the one to the file you just modified and click on \char`\"{}\-Program\char`\"{}.\end{DoxyItemize}
+\-The third is to modify the default value in the code\-:
+
+\begin{DoxyItemize}
+\item \-Edit the file contiki-\/raven-\/main.\-c in the directory platform-\/raven. \-You will see the \-M\-A\-C address set in a line like\-:\end{DoxyItemize}
+
+\begin{DoxyCode}
+/* Put default MAC address in EEPROM */
+uint8_t mac_address[8] EEMEM = {0x02, 0x11, 0x22, 0xff, 0xfe, 0x33, 0x44, 0x55}
+      ;
+\end{DoxyCode}
+
+
+\begin{DoxyItemize}
+\item \-Change this value, recompile and reprogram the elf on the board.\end{DoxyItemize}
+\hypertarget{a00058_advanced_fuses}{}\paragraph{\-Setting the fuses manually}\label{a00058_advanced_fuses}
+\-In case you need to reset the fuses on one \-A\-V\-R, do the following\-: \begin{DoxyItemize}
+\item \-In \-A\-V\-R \-Studio, click on \char`\"{}\-Tools\char`\"{}-\/$>$\char`\"{}\-Program A\-V\-R\char`\"{}-\/$>$\char`\"{}\-Auto Connect\char`\"{} \item \-Go to the \char`\"{}\-Fuses\char`\"{} tab \item \-In the lower part of the window, set the \-E\-X\-T\-E\-N\-D\-E\-D, \-H\-I\-G\-H, \-L\-O\-W fuses to the following values \begin{DoxyVerb}
+0xFF, 0x99, 0xE2 for the ATmega1284P on the RAVEN board
+0xFF, 0x99, 0xE2 for the ATmega3290P on the RAVEN board
+0xFB, 0x99, 0xDE for the AT90USB1287 on the USB Stick
+\end{DoxyVerb}
+ \item \-In the same tab, \-Click on \char`\"{}\-Program\char`\"{} \end{DoxyItemize}
+\hypertarget{a00058_advanced_capture}{}\paragraph{\-Observing packets with Atmel Wireless Services or Wireshark}\label{a00058_advanced_capture}
+\-To view packets being sent over the air, you can use \-Atmel \-A\-V\-R \-Wireless \-Services in \-Sniffer \-Mode, with the \-R\-Z \-U\-S\-B \-Stick. \-You need the software preinstalled on the \-R\-Z \-U\-S\-B \-Stick to do this. \-Packets are sent on channel 24. \-Links to detailed information about \-A\-V\-R \-Wireless \-Services is provided with the \-R\-Z \-U\-S\-B \-Stick.
+
+\-See the \hyperlink{a00053}{\-R\-Z\-R\-A\-V\-E\-N \-U\-S\-B \-Stick (\-Jackdaw)} documentation for more details about using \-Wireshark.\hypertarget{a00058_adavanced_linux}{}\paragraph{\-Programming Flash, Fuses, E\-E\-P\-R\-O\-M from a Linux machine}\label{a00058_adavanced_linux}
+\-One can use avrdude to load the binaries in \-Linux.\hypertarget{a00058_advanced_hc01}{}\paragraph{\-Using H\-C01 Header Compression Scheme}\label{a00058_advanced_hc01}
+\-I\-E\-T\-F \-Internet \-Draft draft-\/hui-\/6lowpan-\/hc-\/01 defines a stateful header compression mechanism (called \-H\-C01) which will soon deprecate the stateless header compression mechanism (called \-H\-C1) defined in \-R\-F\-C4944. \-H\-C01 is much more powerfull and flexible, in particular it allows compression of some multicast addresses and of all global unicast addresses.
+
+\-Contiki is compiled by default with \-H\-C1 support. \-To use \-H\-C01 instead, edit platform/xxx/contiki-\/conf.\-h (replace xxx with avr-\/raven, then avr-\/ravenusb.) and replace the line\par
+ 
+\begin{DoxyCode}
+#define SICSLOWPAN_CONF_COMPRESSION SICSLOWPAN_CONF_COMPRESSION_HC1
+\end{DoxyCode}
+ with 
+\begin{DoxyCode}
+#define SICSLOWPAN_CONF_COMPRESSION SICSLOWPAN_CONF_COMPRESSION_HC01
+\end{DoxyCode}
+
+
+\-Recompile and load \-Contiki for both the \-R\-A\-V\-E\-N \-A\-Tmega1284\-P and \-R\-Z \-U\-S\-B \-Stick.
+
+\-If you capture packets being sent over the air (on the 802.\-15.\-4 network), you will see that much more packets are compressed than when \-H\-C1 is used. \-Overall, packets sent are much smaller.\hypertarget{a00058_advanced_network}{}\paragraph{\-Building a more complete network}\label{a00058_advanced_network}
+\-You can integrate the \-R\-A\-V\-E\-N boards and \-R\-Z \-U\-S\-B stick to a more complete \-I\-Pv6 network by connecting the \-P\-C which you plug the \-R\-Z \-U\-S\-B \-Stick in to any \-I\-Pv6 network with correct routing configured.
+
+\-This way, you will be able to reach the \-R\-A\-V\-E\-N boards (to read sensor data for example) from anywhere within this \-I\-Pv6 network, or even any \-I\-Pv4 network if v4 to v6 translation mechanisms are used between both networks.
+
+\-You can also have several \-R\-A\-V\-E\-N boards in your setup. \-If you do so, be sure to configure different \-M\-A\-C addresses on each board.
+
+
+
+ \hypertarget{a00058_issues}{}\paragraph{\-Known issues}\label{a00058_issues}
+{\bfseries \-R\-Z \-U\-S\-B \-Stick \-Link local address not created on \-Linux}\par
+
+
+\-When plugging the \-R\-Z \-U\-S\-B \-Stick in a \-Linux \-P\-C, it should automatically configure a link local address (fe80\-:\-:0012\-:13ff\-:fe14\-:1516/64 with default \-M\-A\-C address). \-On some \-Linux distributions, it seems to fail. \-To check this, in a terminal, type \begin{DoxyVerb}
+ifconfig
+\end{DoxyVerb}
+ \-If the interface usb0 does not have an \-I\-Pv6 address starting with fe80\-:\-:, add it manually by typing\-: \begin{DoxyVerb}
+ip -6 address add fe80::0012:13ff:fe14:1516/64 scope link dev usb0
+\end{DoxyVerb}
+
+
+{\bfseries make version issues}\par
+ \-You need to use the \char`\"{}make\char`\"{} executable from \-Win\-A\-V\-R. \-There are compilation issues with \-G\-N\-U make coming with \-Cygwin.
+
+
+
+ \hypertarget{a00058_annex}{}\subsubsection{\-Annex}\label{a00058_annex}
+\hypertarget{a00058_annex_contikiDocs}{}\paragraph{\-Annex -\/ Additional Documentation}\label{a00058_annex_contikiDocs}
+\begin{DoxyItemize}
+\item \-U\-S\-B \-Stick \-Platform\-: \hyperlink{a00053}{\-R\-Z\-R\-A\-V\-E\-N \-U\-S\-B \-Stick (\-Jackdaw)} \item \-User interface on \-Raven\-:lcdraven \item \-Wireless libraries for \-Atmel \-Radio\-: wireless \item \-M\-A\-C for \-Atmel \-Radio\-: \hyperlink{a00055}{\-S\-I\-C\-S\-Lo\-W\-M\-A\-C \-Implementation} \item \-I\-Pv6 \-Implementation\-: \hyperlink{a00061}{u\-I\-P \-I\-Pv6 specific features} \item 6lowpan \-Implementation\-: \hyperlink{a00056}{6\-Lo\-W\-P\-A\-N implementation}\end{DoxyItemize}
+\hypertarget{a00058_annex_hardware}{}\paragraph{\-Annex -\/ Atmel products detailed documentation}\label{a00058_annex_hardware}
+{\bfseries \-R\-A\-V\-E\-N evaluation and starter kits}\par
+ \begin{DoxyItemize}
+\item \-A\-T\-A\-V\-R\-R\-Z\-R\-A\-V\-E\-N evaluation kit\-: \href{http://www.atmel.com/dyn/products/tools_card.asp?tool_id=4291}{\tt http\-://www.\-atmel.\-com/dyn/products/tools\-\_\-card.\-asp?tool\-\_\-id=4291} \item \-A\-V\-R \-R\-A\-V\-E\-N board\-: \href{http://www.atmel.com/dyn/products/tools_card.asp?tool_id=4395}{\tt http\-://www.\-atmel.\-com/dyn/products/tools\-\_\-card.\-asp?tool\-\_\-id=4395} \item \-R\-Z \-U\-S\-B \-Stick\-: \href{http://www.atmel.com/dyn/products/tools_card.asp?tool_id=4396}{\tt http\-://www.\-atmel.\-com/dyn/products/tools\-\_\-card.\-asp?tool\-\_\-id=4396}\end{DoxyItemize}
+{\bfseries \-R\-A\-V\-E\-N \-A\-V\-Rs and \-Wireless transceivers}\par
+ \begin{DoxyItemize}
+\item \-A\-Tmega 1284\-P \-Mega\-A\-V\-R\-: \href{http://www.atmel.com/dyn/products/product_card.asp?part_id=4331}{\tt http\-://www.\-atmel.\-com/dyn/products/product\-\_\-card.\-asp?part\-\_\-id=4331} \item \-A\-Tmega 3290\-P \-L\-C\-D \-A\-V\-R\-: \href{http://www.atmel.com/dyn/products/product_card.asp?part_id=4059}{\tt http\-://www.\-atmel.\-com/dyn/products/product\-\_\-card.\-asp?part\-\_\-id=4059} \item \-A\-T90\-U\-S\-B1287 \-U\-S\-B \-A\-V\-R\-: \href{http://www.atmel.com/dyn/products/product_card.asp?part_id=3875}{\tt http\-://www.\-atmel.\-com/dyn/products/product\-\_\-card.\-asp?part\-\_\-id=3875} \item \-A\-T86\-R\-F230 802.\-15.\-4 \-Transceiver\-: \href{http://www.atmel.com/dyn/products/product_card.asp?part_id=3941}{\tt http\-://www.\-atmel.\-com/dyn/products/product\-\_\-card.\-asp?part\-\_\-id=3941}\end{DoxyItemize}
+{\bfseries \-Additional hardware}\par
+ \begin{DoxyItemize}
+\item \-A\-T\-S\-T\-K500 evaluation kit \href{http://www.atmel.com/dyn/products/tools_card.asp?tool_id=2735}{\tt http\-://www.\-atmel.\-com/dyn/products/tools\-\_\-card.\-asp?tool\-\_\-id=2735} \item \-A\-T\-E\-V\-K1100 evaluation kit \href{http://www.atmel.com/dyn/products/tools_card.asp?tool_id=4114}{\tt http\-://www.\-atmel.\-com/dyn/products/tools\-\_\-card.\-asp?tool\-\_\-id=4114} \item \-A\-V\-R \-J\-T\-A\-G\-I\-C\-E mk\-I\-I debugging platform \href{http://www.atmel.com/dyn/products/tools_card.asp?tool_id=3353}{\tt http\-://www.\-atmel.\-com/dyn/products/tools\-\_\-card.\-asp?tool\-\_\-id=3353}\end{DoxyItemize}
+{\bfseries \-Buying the hardware (part number \-A\-T\-A\-V\-R\-R\-Z\-R\-A\-V\-E\-N and \-A\-T\-J\-T\-A\-G\-I\-C\-E2)}\par
+ \begin{DoxyItemize}
+\item \-For the \-U.\-S. you can use \href{http://www.atmel.com/contacts/distributor_check.asp}{\tt http\-://www.\-atmel.\-com/contacts/distributor\-\_\-check.\-asp} \item \-Digikey \href{http://www.digikey.com/}{\tt http\-://www.\-digikey.\-com/} \item \-Spoerle \href{http://www.spoerle.com/en/products}{\tt http\-://www.\-spoerle.\-com/en/products} \item \-Lawicel \href{http://www.lawicel-shop.se}{\tt http\-://www.\-lawicel-\/shop.\-se}\end{DoxyItemize}
+\hypertarget{a00058_annex_software}{}\paragraph{\-Software setup details}\label{a00058_annex_software}
+{\bfseries \-Contiki}\par
+ \-Download \-Contiki code from \href{http://www.sics.se/contiki}{\tt http\-://www.\-sics.\-se/contiki} and extract the source code. \-We assume the directory you extract to is c\-:/contiki.
+
+{\bfseries \-Cygwin}\par
+ \begin{DoxyItemize}
+\item \-Download \-Cygwin from \href{http://www.cygwin.com}{\tt http\-://www.\-cygwin.\-com} \item \-Launch the setup executable \item \-Follow the instructions until you reach the \-Window \char`\"{}\-Cygwin 
+\-Setup -\/ Select Packages\char`\"{} \item \-In this window, expand the \char`\"{}\-Devel\char`\"{} item and\end{DoxyItemize}
+{\bfseries \-A\-V\-R \-Studio}\par
+ \-Download and install \-A\-V\-R \-Studio from \href{http://www.atmel.com/dyn/products/tools_card.asp?tool_id=2725}{\tt http\-://www.\-atmel.\-com/dyn/products/tools\-\_\-card.\-asp?tool\-\_\-id=2725}
+
+{\bfseries \-Win\-A\-V\-R}\par
+ \-Win\-A\-V\-R which contains a number of \-A\-V\-R tools such as the avr-\/gcc compiler.
+
+\-Download and install \-Win\-A\-V\-R latest version from \href{http://winavr.sourceforge.net/}{\tt http\-://winavr.\-sourceforge.\-net/}
+
+{\bfseries \-J\-T\-A\-G\-I\-C\-E mk\-I\-I \-Drivers}\par
+ \-Plug the \-J\-T\-A\-G\-I\-C\-E mk\-I\-I in a \-U\-S\-B port of a windows \-P\-C. \-Follow the indications to install the \-Windows drivers automatically. 

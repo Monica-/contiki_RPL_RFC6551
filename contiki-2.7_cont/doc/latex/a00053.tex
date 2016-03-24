@@ -1,0 +1,165 @@
+\hypertarget{a00053}{\subsection{\-R\-Z\-R\-A\-V\-E\-N \-U\-S\-B \-Stick (\-Jackdaw)}
+\label{a00053}\index{\-R\-Z\-R\-A\-V\-E\-N U\-S\-B Stick (\-Jackdaw)@{\-R\-Z\-R\-A\-V\-E\-N U\-S\-B Stick (\-Jackdaw)}}
+}
+\hypertarget{a00058_introduction}{}\subsubsection{\-Introduction}\label{a00058_introduction}
+\-This document explains the \-Raven \-U\-S\-B \-Stick when operated on an \-I\-Pv6 network. \-The \-U\-S\-B \-Stick allows the computer, and outside networks, to communicate with low-\/cost embedded nodes. \-The \char`\"{}\-R\-Z\-U\-S\-B\-S\-T\-I\-C\-K\char`\"{} hardware, when loaded with the \-Contiki \char`\"{}ravenusbstick\char`\"{} example, forms the complete device described here. \-This combination of hardware and firmware is henceforth referred to as the \char`\"{}\-Jackdaw\char`\"{}.\hypertarget{a00053_capabilities}{}\subsubsection{\-Capabilities}\label{a00053_capabilities}
+\-The \-Jackdaw supports multiple operating systems, customizing itself to \-O\-Ses as needed. \-The overall idea for a network interface is to emulate an ethernet interface. \-Data is passed to the \-Jackdaw as if it was an ethernet port, however the \-Jackdaw passes this data over the air to end nodes.
+
+\-The \-Jackdaw can function as an 802.\-15.\-4 sniffer, and can sniff the raw 802.\-15.\-4 frame at the same time it is providing network functionality.
+
+\-In addition to the network interface, the \-Jackdaw can enumerate a \-U\-S\-B serial port at the same time. \-This serial port can be used to pass debug messages, or to change operating parameters as needed. \-Note that \-Windows\-X\-P \-S\-P2 or lower does not support this, the serial port will only be enumerated on \-Linux or \-Windows\-X\-P \-S\-P3. \-Windows \-Vista should work with minor modification to the \-I\-N\-F files.
+
+\-Finally the \-Jackdaw has the ability to show up as a \-U\-S\-B mass storage drive. \-This is used to load drivers onto a \-P\-C without needing any other hardware, such as a driver disk. \-The amount of storage is very limited at around 59 \-Kbyte, sufficent for a few driver files.\hypertarget{a00053_pluging}{}\subsubsection{\-Plugging It In}\label{a00053_pluging}
+\-When plugging the \-Jackdaw in, several things occur in sequence\-:
+
+
+\begin{DoxyItemize}
+\item \-Attempt to appear as a network interface with a serial port. \-If this fails (drivers don't load), it then unmounts itself and waits a few seconds.
+\item \-Attempt to appear as just a network interface. \-If this fails as well, it again unmounts itself.
+\item \-Finally mounts as a mass storage device
+\end{DoxyItemize}
+
+\-If the device has never before been plugged in, you will end up with an unformatted \-U\-S\-B mass storage device. \-You can format this as you would a normal drive -\/ on \-Windows right click and select \char`\"{}format\char`\"{}. \-If the device has previously been formatted, or was programmed from a preformatted flash image, you will end up with a new drive which contains the drivers needed to have the device work on \-Windows.\hypertarget{a00053_loaddrivers}{}\paragraph{\-Loading Drivers}\label{a00053_loaddrivers}
+\-Windows should prompt you for drivers for the device. \-Simply point it to location \char`\"{}\-C\-:$\backslash$contikisrc$\backslash$cpu$\backslash$avr$\backslash$dev$\backslash$usb$\backslash$\-I\-N\-F\char`\"{} \-Where the directory \char`\"{}c\-:$\backslash$contikisrc\char`\"{} is where the \-Contiki source code is on your computer.
+
+\-If you have a \-Jackdaw with a formatted mass storage section, with the drivers on it, you can simply wait until that drive shows up. \-Then point the \-Windows \char`\"{}new hardware found\char`\"{} \-Wizard to this new drive, which should have three .\-I\-N\-F files in it.\hypertarget{a00053_setup}{}\subsubsection{\-Setting Up}\label{a00053_setup}
+\hypertarget{a00053_Linux}{}\paragraph{\-Linux}\label{a00053_Linux}
+\-The \-Jackdaw has excellent support in \-Linux. \-The first thing to check is that it was detected. \-Plug it in, and check the output of 'dmesg'. \-You should see something like\-:
+
+\begin{DoxyVerb}
+usb 5-2: new full speed USB device using uhci_hcd and address 29
+usb 5-2: configuration #1 chosen from 1 choice
+rndis_host 5-2:1.0: dev can't take 1338 byte packets (max 1338), adjusting MTU to 1280
+usb0: register 'rndis_host' at usb-0000:00:1d.3-2, RNDIS device, 02:12:13:14:15:16
+cdc_acm 5-2:1.2: ttyACM0: USB ACM device
+usb 5-2: New USB device found, idVendor=03eb, idProduct=2021
+usb 5-2: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 5-2: Product: RZRAVEN USB DEMO
+usb 5-2: Manufacturer: Atmel
+usb 5-2: SerialNumber: 1.0.0
+\end{DoxyVerb}
+
+
+\-You can then check that it was assigned a link-\/local address. \-Run 'ifconfig' and observe the output, looking for the line about usb0\-:
+
+\begin{DoxyVerb}
+usb0      Link encap:Ethernet  HWaddr 02:12:13:14:15:16
+          inet6 addr: fe80::12:13ff:fe14:1516/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1280  Metric:1
+          RX packets:131 errors:131 dropped:0 overruns:0 frame:131
+          TX packets:169 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:30429 (29.7 KiB)  TX bytes:28290 (27.6 KiB)
+\end{DoxyVerb}
+
+
+\-The address that starts with \char`\"{}fe80\char`\"{} is the link-\/local address. \-If this wasn't automatically assigned, you can assign one as such\-:
+
+\begin{DoxyVerb}
+ip -6 address add fe80::12:13ff:fe14:1516/64 scope link dev usb0
+\end{DoxyVerb}
+
+
+\-If you wish to see how to generate router advertisements in \-Linux see the \hyperlink{a00058}{\-Running \-Contiki with u\-I\-Pv6 and \-S\-I\-C\-Slowpan support on \-Atmel \-R\-A\-V\-E\-N hardware} .
+
+\-You will also notice the line mentioning tty\-A\-C\-M0, that is the 'debug' interface. \-You can connect any terminal emulator to it such as gtkterm. \-Simply set the port to \char`\"{}dev/tty\-A\-C\-M0\char`\"{}. \-See the \hyperlink{a00053_DebugPort}{\-Debug \-Port \-Useage} section for more information.\hypertarget{a00053_Windows}{}\paragraph{\-X\-P}\label{a00053_Windows}
+\-Once the drivers are installed, you should see the device show up in \char`\"{}\-Network Connections\char`\"{}. \-You should see something like this\-:
+
+
+
+\-Right-\/click on this, and hit \char`\"{}\-Properties\char`\"{}.
+
+\-Click the \char`\"{}\-Install\char`\"{} button. \-Select \char`\"{}\-Protocol\char`\"{} as the type of network component, and hit \char`\"{}\-Add\char`\"{}. \-The manufacture is \char`\"{}\-Microsoft\char`\"{} and the network protocol is \char`\"{}\-T\-C\-P/\-I\-P version 6\char`\"{}. \-Hit \-O\-K.
+
+\-Then in the window \char`\"{}\-This connection uses the following items\-:\char`\"{}, uncheck everything \-E\-X\-C\-E\-P\-T \char`\"{}\-Microsoft T\-C\-P/\-I\-P version 6\char`\"{}. \-Hit \-O\-K and get out of that dialog. \-We can no longer do anything graphically, as \-Windows\-X\-P doesn't have support for \-I\-Pv6 through anything but the command-\/line interface.
+
+\-If you wish to see how to configure \-Windows to generate router advertisements, see the \hyperlink{a00058}{\-Running \-Contiki with u\-I\-Pv6 and \-S\-I\-C\-Slowpan support on \-Atmel \-R\-A\-V\-E\-N hardware}.
+
+\-You may additionally see a debug port enumerate. \-This will show up as a serial port, which can be checked by going to the \-Device \-Manager and seeing if an \char`\"{}\-Atmel Raven U\-S\-B Debug Port\char`\"{} shows up under \char`\"{}\-Ports (\-C\-O\-M \& L\-P\-T)\char`\"{}. \-If so, you can connect a terminal emulator such to this port. \-A simple one that is recommended is \char`\"{}\-Br@y++ Terminal\char`\"{}.\hypertarget{a00053_DebugPort}{}\subsubsection{\-Debug Port Useage}\label{a00053_DebugPort}
+\-The \-Jackdaw enumerates a \-C\-D\-C serial port. \-This is typically used by \-U\-S\-B$<$-\/-\/$>$\-Serial converters, however in this case it simply emulates a serial port. \-Since there is no physical serial port, the setting of the baud rate does not matter.
+
+\-The \-Jackdaw sends both a \-L\-F and \-C\-R after every line, so you should disable any terminal emulator options that add extra \-C\-R's.
+
+\-With the port connected, strike the 'h' key to bring up the main menu. \-It should look something like this\-:
+
+\begin{DoxyVerb}
+********** Jackdaw Menu ******************
+*                                        *
+* Main Menu:                             *
+*  h,?             Print this menu       *
+*  m               Print current mode    *
+*  s               Set to sniffer mode   *
+*  n               Set to network mode   *
+*  6               Toggle 6lowpan        *
+*  r               Toggle raw mode       *
+*  u               Switch to mass-storage*
+*                                        *
+* Make selection at any time by pressing *
+* your choice on keyboard.               *
+******************************************
+\end{DoxyVerb}
+
+
+{\bfseries \-Network mode}\par
+ \-Network mode is the default mode. \-In this mode addresses inside \-I\-P packets will be adjusted to reflect the network they are on. \-For instance inside a \-Router \-Advertisement message, the link-\/layer address on the ethernet side will be 6 bytes. \-On the 802.\-15.\-4 side it will be 8 bytes. \-This allows both systems to accept this \-I\-P packet as valid.
+
+{\bfseries \-Sniffer mode}\par
+ \-In sniffer mode, the \-I\-P packets themselves are left unchanged. \-This means that you won't be able to form a network, as the computer's \-I\-P stack will not understand why the link-\/layer addresses are 8 bytes. \-It is only expecting 6 bytes, as it is assuming an ethernet layer.
+
+{\bfseries 6lowpan enabled/disabled}\par
+ \-Enabling or \-Disabling 6lowpan changes if the \-U\-S\-B\-Stick will decode 6lowpan messages into valid \-I\-Pv6 messages and send them over the ethernet interface. \-Enabled by default.
+
+{\bfseries raw mode enabled/disabled}\par
+ \-If raw mode is enabled, every 802.\-15.\-4 frame that comes in will be sent to the computer raw. \-It will be sent as an ethernet frame, with the \-E\-T\-H\-T\-Y\-P\-E set to 0x809\-A. \-Note this is not an \-I\-E\-E\-E standard, so to use this device as a 802.\-15.\-4 sniffer needs some extra work, described in the \hyperlink{a00053_Wireshark}{\-Using \-Wireshark} section. \-Also for every 802.\-15.\-4 packet that is sent out over the \-R\-F port is sent out over ethernet as well.
+
+{\bfseries \-Mass \-Storage}\par
+ \-This will switch the device to \hyperlink{a00053_MassStorageMode}{\-Mass \-Storage \-Mode}\hypertarget{a00053_Wireshark}{}\subsubsection{\-Using Wireshark}\label{a00053_Wireshark}
+\-When using the \-Jackdow with 6lowpan, you can simply operate \-Wireshark as normal. \-Select the interface as the \-U\-S\-B \-Stick, on \-Linux this will likely be \char`\"{}usb0\char`\"{}, and on \-Windows it will just call the interface \char`\"{}\-Atmel\char`\"{}. \-You will see pure \-I\-Pv6 packets, with traffic such as \-I\-C\-M\-Pv6, \-T\-C\-P, or \-U\-D\-P.
+
+\-If you have raw mode enabled (it is by default), you will also see 802.\-15.\-4 information. \-You may see many 802.\-15.\-4 packets for one \-I\-P packet due to fragmentation. \-You can also put either 'ipv6' or 'wpan' in the filter box at the top of \-Wireshark to filter out everything but \-I\-Pv6 or 802.\-15.\-4 traffic. \-Also, for received frames the 802.\-15.\-4 data will come \-B\-E\-F\-O\-R\-E the \-I\-Pv6 packet. \-For transmitted frames, the 802.\-15.\-4 data will come \-A\-F\-T\-E\-R the \-I\-Pv6 packet. \-You can see that in the following, where messages from the same source are boxed\-:
+
+
+
+\-Note that \-Wireshark does have support for 802.\-15.\-4, but you need version 1.\-1.\-2 or later. \-See \hyperlink{a00053_annex_wireshark}{\-Wireshark download} for download instructions.
+
+\begin{DoxyNote}{\-Note}
+802.\-15.\-4 packets transmitted from the \-Jackdaw will come up as having \char`\"{}\-Bad F\-C\-S\char`\"{}. \-This is because the \-F\-C\-S is added automatically by the radio chip, and is not known to the microcontroller on the \-Jackdaw. \-Hence some padding bytes are added to allow you to see where the \-F\-C\-S would go. \-The 802.\-15.\-4 packet was generated from the \-I\-Pv6 packet directly. \-The only way to actually sniff the real over the air data is to use a second \-Jackdaw as just a sniffer.
+\end{DoxyNote}
+\-Also be sure to use the features of wireshark to make life easier! \-You can colorize packets based on various things, including destination and source addresses. \-The following example colourizes packets destined for different addresses differently, quickly letting you see message flow. \-You could furthur colorize based on the message type, to allow you to see 802.\-15.\-4 packets and \-I\-Pv6 packets in different colors. \-The following example has the 'source\-\_\-eth' and 'dest\-\_\-eth' rules at the top of the order, you may want to put them lower so you still see other colourizations such as bad \-T\-C\-P, checksum errors, etc.
+
+\hypertarget{a00053_MassStorageMode}{}\subsubsection{\-Mass Storage Mode}\label{a00053_MassStorageMode}
+\-The mass storage mode provides a small amount of storage by using part of the internal flash of the \-A\-V\-R. \-This will get erased every time the \-A\-V\-R is reprogrammed.
+
+\-The \-Jackdaw can end in mass storage mode in three ways. \-It can fail all other modes and end up there, it can be forced there through the debug port, or it can be forced there through a hardware switch. see the \hyperlink{a00053_hardwareforce}{\-Forcing \-Jackdaw to certain \-Modes} section.
+
+\-Once in mass storage mode, you will have to format the device. \-This can be done by right-\/clicking on it and hitting format, or if you attempt to open the drive \-Windows will ask you to format it. \-Once it is formatted you can store a few \-I\-N\-F files on it! \-If you read the \-F\-L\-A\-S\-H back from the \-A\-V\-R, you now have an image with a preformatted drive with those \-I\-N\-F files on it already!\hypertarget{a00053_hardwareforce}{}\subsubsection{\-Forcing Jackdaw to certain Modes}\label{a00053_hardwareforce}
+\-The \-Jackdaw has several operating modes, and very limited inputs to switch between them. \-Hence it auto-\/switches to what it feels is the most useful mode, but it's not always right. \-Hence an override is provided to allow you to use it in other modes.
+
+\-This override is to short two pads on the back of the \-Jackdaw. \-Note that only a somewhat conductive short is needed, a moist finger should be plenty of conductivity. \-The pads to short are visible below the\char`\"{}\-A\char`\"{} in the \char`\"{}\-A\-T\-M\-E\-L\char`\"{} logo. \-There will be three pads -\/ only short the two closest to the \char`\"{}\-A\-T\-M\-E\-L\char`\"{} logo. \-Or as below\-:
+
+
+
+\-Short them when plugging in the \-Jackdaw, and it enters \char`\"{}reverse logic mode\char`\"{}. \-If it doesn't, you either might have not enough conductivity, or you might be shorting to the third pad too much.
+
+\-In \char`\"{}reverse logic mode\char`\"{} it will stay in the main mode (\-Network interface + \-Serial debug port) if it doesn't see the driver loading on the host computer. \-This mode is needed for \-Windows \-Vista, where you have to keep the hardware plugged in while installing drivers.
+
+\-If the driver \-D\-O\-E\-S load \-O\-K, it will remount itself as a mass storage device. \-The idea is that you can hold the \-Jackdaw a specific way when plugging in and it will mount as mass storage. \-Note that it will \-F\-I\-R\-S\-T mount as a network interface for a few seconds before switching.
+
+\-One problem with this is \-Windows \-X\-P \-S\-P2\-: it will never exit the first (network + debug) mode, and you don't have a debug port to switch to mass storage mode. \-You can either upgrade to \-S\-P3, or uncomment this line in platforms$\backslash$ravenusbstick$\backslash$contiki-\/raven-\/default-\/init-\/lowlevel.\-c\-:
+
+
+\begin{DoxyCode}
+#define WINXPSP2
+\end{DoxyCode}
+\hypertarget{a00053_Address}{}\subsubsection{\-Translation}\label{a00053_Address}
+\-Addresses on the 802.\-15.\-4 network are 8 bytes long, and addresses on an ethernet network are 6 bytes long. \-This provides some problems for bridging the two networks. \-This should be done by routing the \-I\-P packets between the ethernet and 802.\-15.\-4 network, but the current code does not have support for routing.
+
+\-As a temporary solution, addresses are \char`\"{}translated\char`\"{} when passing through the \-Jackdaw. \-This generates valid ethernet addresses from the 802.\-15.\-4 addresses, and valid 802.\-15.\-4 addresses from ethernet addresses. \-Note this also includes translating addresses which are inside \-I\-P packets. \-Certain messages, such as various neighbor discovery messages, include a link-\/layer address. \-An \-I\-P stack which is expecting an ethernet-\/sized address will get confused by the different size, and vis-\/versa.
+
+\-Details of the translation can be found in the sicslowinterop documentation. \-It is important to remember this is a temporary solution until proper routing is implemented.\hypertarget{a00053_Annex}{}\subsubsection{\-Annex}\label{a00053_Annex}
+\hypertarget{a00053_annex_wireshark}{}\paragraph{\-Wireshark download}\label{a00053_annex_wireshark}
+\begin{DoxyItemize}
+\item \-Check the latest stable release at \href{http://www.wireshark.org/}{\tt http\-://www.\-wireshark.\-org/} -\/ it may already be revision 1.\-1.\-2 or later. \item \-You can apply a patch to \-Wireshark sources earlier than 1.\-1.\-2 and rebuild it yourself, see \href{https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=2938}{\tt https\-://bugs.\-wireshark.\-org/bugzilla/show\-\_\-bug.\-cgi?id=2938} \item \-You can download the latest sources or prebuild binary from \href{http://www.wireshark.org/download/automated/}{\tt http\-://www.\-wireshark.\-org/download/automated/} -\/ be sure to get \-S\-V\-N revision 26352 or later. \-For win32 there are three types of binaries, the \char`\"{}normal\char`\"{} installer will have a name like \char`\"{}wireshark-\/win32-\/1.\-1.\-2-\/\-S\-V\-N-\/26354.\-exe\char`\"{}. \item \-You can download a prebuilt version of \-Wireshark 1.\-0.\-3 at \href{http://www.newae.com/download/wireshark-setup-1.0.3-jackdaw.exe}{\tt http\-://www.\-newae.\-com/download/wireshark-\/setup-\/1.\-0.\-3-\/jackdaw.\-exe}\end{DoxyItemize}
+\begin{DoxyNote}{\-Note}
+\-For some reason the author list is crazy, i'm not sure how to stop this! \-It should follow this text... 
+\end{DoxyNote}

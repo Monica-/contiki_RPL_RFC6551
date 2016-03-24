@@ -1,0 +1,171 @@
+00:00.818	ID:7	Rime started with address 193.12.0.0.0.0.0.7
+00:00.832	ID:5	Rime started with address 193.12.0.0.0.0.0.5
+00:00.833	ID:7	MAC c1:0c:00:00:00:00:00:07 CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.845	ID:7	Tentative link-local IPv6 address fe80:0000:0000:0000:c30c:0000:0000:0007
+00:00.846	ID:5	MAC c1:0c:00:00:00:00:00:05 CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.852	ID:7	Starting 'UDP client process' 'collect common process'
+00:00.853	ID:2	Rime started with address 193.12.0.0.0.0.0.2
+00:00.859	ID:5	Tentative link-local IPv6 address fe80:0000:0000:0000:c30c:0000:0000:0005
+00:00.865	ID:4	Rime started with address 193.12.0.0.0.0.0.4
+00:00.865	ID:5	Starting 'UDP client process' 'collect common process'
+00:00.867	ID:6	Rime started with address 193.12.0.0.0.0.0.6
+00:00.867	ID:2	MAC c1:0c:00:00:00:00:00:02 CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.879	ID:4	MAC c1:0c:00:00:00:00:00:04 CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.880	ID:2	Tentative link-local IPv6 address fe80:0000:0000:0000:c30c:0000:0000:0002
+00:00.882	ID:6	MAC c1:0c:00:00:00:00:00:06 CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.886	ID:2	Starting 'UDP client process' 'collect common process'
+00:00.889	ID:8	Rime started with address 193.12.0.0.0.0.0.8
+00:00.892	ID:4	Tentative link-local IPv6 address fe80:0000:0000:0000:c30c:0000:0000:0004
+00:00.894	ID:6	Tentative link-local IPv6 address fe80:0000:0000:0000:c30c:0000:0000:0006
+00:00.898	ID:4	Starting 'UDP client process' 'collect common process'
+00:00.899	ID:1	Rime started with address 193.12.0.0.0.0.0.1
+00:00.901	ID:6	Starting 'UDP client process' 'collect common process'
+00:00.904	ID:8	MAC c1:0c:00:00:00:00:00:08 CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.914	ID:1	MAC c1:0c:00:00:00:00:00:01 CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.916	ID:3	Rime started with address 193.12.0.0.0.0.0.3
+00:00.916	ID:8	Tentative link-local IPv6 address fe80:0000:0000:0000:c30c:0000:0000:0008
+00:00.923	ID:8	Starting 'UDP client process' 'collect common process'
+00:00.927	ID:1	Tentative link-local IPv6 address fe80:0000:0000:0000:c30c:0000:0000:0001
+00:00.930	ID:3	MAC c1:0c:00:00:00:00:00:03 CSMA ContikiMAC, channel check rate 8 Hz, radio channel 26
+00:00.933	ID:1	Starting 'UDP server process' 'collect common process'
+00:00.938	ID:1	update root container con rank 256
+00:00.940	ID:1	crea root cont
+00:00.942	ID:1	etx root: 640
+00:00.943	ID:3	Tentative link-local IPv6 address fe80:0000:0000:0000:c30c:0000:0000:0003
+00:00.947	ID:1	header: 0x03000002, type: 3
+00:00.949	ID:3	Starting 'UDP client process' 'collect common process'
+00:00.953	ID:1	created root and object of type: 3, flags: 0, length: 2
+00:00.958	ID:1	header: 0x04002204, type: 4
+00:00.965	ID:1	created root and object of type: 4, flags: 34, length: 4
+00:00.970	ID:1	header: 0x05001304, type: 5
+00:00.977	ID:1	created root and object of type: 5, flags: 19, length: 4
+00:00.982	ID:1	header: 0x07000102, type: 7
+00:00.988	ID:1	created root and object of type: 7, flags: 1, length: 2
+00:00.991	ID:1	End creating root cont
+00:04.272	ID:1	lee para dio de conten hop: 1= 0x0001
+00:04.279	ID:1	lee para dio de conten throughput: 100= 0x00000064
+00:04.286	ID:1	lee para dio de conten latency: 100= 0x00000064
+00:04.293	ID:1	lee para dio de conten etx: 640= 0x0280, high:0x02, low:0x80
+00:04.373	ID:2	lee de buffer tipo: 3
+00:04.377	ID:2	obj_cont: 0, number_objects: 0
+00:04.382	ID:2	creado objeto tipo: 3, y el del conten era: 0
+00:04.385	ID:2	ahora hay 1 objetos
+00:04.385	ID:4	lee de buffer tipo: 3
+00:04.389	ID:2	recibido DIO de tipo: 3 valor: 1
+00:04.389	ID:4	obj_cont: 0, number_objects: 0
+00:04.394	ID:2	leido de DIO type: 3, flags: 0x0000, length: 2
+00:04.394	ID:4	creado objeto tipo: 3, y el del conten era: 0
+00:04.397	ID:4	ahora hay 1 objetos
+00:04.397	ID:2	lee de buffer tipo: 4
+00:04.401	ID:2	obj_cont: 1, number_objects: 1
+00:04.401	ID:4	recibido DIO de tipo: 3 valor: 1
+00:04.406	ID:2	creado objeto tipo: 4, y el del conten era: 0
+00:04.406	ID:4	leido de DIO type: 3, flags: 0x0000, length: 2
+00:04.408	ID:2	ahora hay 2 objetos
+00:04.409	ID:4	lee de buffer tipo: 4
+00:04.412	ID:4	obj_cont: 1, number_objects: 1
+00:04.413	ID:2	recibido DIO de tipo: 4 valor: 100
+00:04.418	ID:4	creado objeto tipo: 4, y el del conten era: 0
+00:04.419	ID:2	leido de DIO type: 4, flags: 0x0022, length: 4
+00:04.420	ID:4	ahora hay 2 objetos
+00:04.421	ID:2	lee de buffer tipo: 5
+00:04.425	ID:4	recibido DIO de tipo: 4 valor: 100
+00:04.425	ID:2	obj_cont: 2, number_objects: 2
+00:04.430	ID:2	creado objeto tipo: 5, y el del conten era: 0
+00:04.431	ID:4	leido de DIO type: 4, flags: 0x0022, length: 4
+00:04.433	ID:2	ahora hay 3 objetos
+00:04.433	ID:4	lee de buffer tipo: 5
+00:04.436	ID:3	lee de buffer tipo: 3
+00:04.437	ID:4	obj_cont: 2, number_objects: 2
+00:04.438	ID:2	recibido DIO de tipo: 5 valor: 100
+00:04.440	ID:3	obj_cont: 0, number_objects: 0
+00:04.442	ID:4	creado objeto tipo: 5, y el del conten era: 0
+00:04.443	ID:2	leido de DIO type: 5, flags: 0x0013, length: 4
+00:04.445	ID:4	ahora hay 3 objetos
+00:04.446	ID:3	creado objeto tipo: 3, y el del conten era: 0
+00:04.446	ID:2	lee de buffer tipo: 7
+00:04.448	ID:3	ahora hay 1 objetos
+00:04.449	ID:4	recibido DIO de tipo: 5 valor: 100
+00:04.450	ID:2	obj_cont: 3, number_objects: 3
+00:04.452	ID:3	recibido DIO de tipo: 3 valor: 1
+00:04.455	ID:2	creado objeto tipo: 7, y el del conten era: 0
+00:04.455	ID:4	leido de DIO type: 5, flags: 0x0013, length: 4
+00:04.457	ID:2	ahora hay 4 objetos
+00:04.457	ID:3	leido de DIO type: 3, flags: 0x0000, length: 2
+00:04.458	ID:4	lee de buffer tipo: 7
+00:04.460	ID:3	lee de buffer tipo: 4
+00:04.461	ID:4	obj_cont: 3, number_objects: 3
+00:04.464	ID:3	obj_cont: 1, number_objects: 1
+00:04.465	ID:2	recibido DIO de tipo: 7 alto: 0x02, bajo: 0x80  etx: 640= 0x0280
+00:04.467	ID:4	creado objeto tipo: 7, y el del conten era: 0
+00:04.469	ID:3	creado objeto tipo: 4, y el del conten era: 0
+00:04.469	ID:4	ahora hay 4 objetos
+00:04.471	ID:2	leido de DIO type: 7, flags: 0x0001, length: 2
+00:04.471	ID:3	ahora hay 2 objetos
+00:04.475	ID:2	mc dio justo despues de rellenarlo:
+00:04.476	ID:3	recibido DIO de tipo: 4 valor: 100
+00:04.477	ID:4	recibido DIO de tipo: 7 alto: 0x02, bajo: 0x80  etx: 640= 0x0280
+00:04.481	ID:2	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.482	ID:3	leido de DIO type: 4, flags: 0x0022, length: 4
+00:04.483	ID:4	leido de DIO type: 7, flags: 0x0001, length: 2
+00:04.484	ID:3	lee de buffer tipo: 5
+00:04.487	ID:4	mc dio justo despues de rellenarlo:
+00:04.488	ID:2	mc dio final dio_input, antes process_dio:
+00:04.488	ID:3	obj_cont: 2, number_objects: 2
+00:04.493	ID:4	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.494	ID:3	creado objeto tipo: 5, y el del conten era: 0
+00:04.494	ID:2	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.496	ID:3	ahora hay 3 objetos
+00:04.497	ID:2	mc dio principio process_dio:
+00:04.499	ID:4	mc dio final dio_input, antes process_dio:
+00:04.501	ID:3	recibido DIO de tipo: 5 valor: 100
+00:04.504	ID:2	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.506	ID:4	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.506	ID:3	leido de DIO type: 5, flags: 0x0013, length: 4
+00:04.506	ID:2	mc dio (process_dio) 2:
+00:04.509	ID:3	lee de buffer tipo: 7
+00:04.509	ID:4	mc dio principio process_dio:
+00:04.513	ID:2	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.513	ID:3	obj_cont: 3, number_objects: 3
+00:04.515	ID:4	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.517	ID:2	tipo: 3, aggreg tipo: 0
+00:04.518	ID:3	creado objeto tipo: 7, y el del conten era: 0
+00:04.518	ID:4	mc dio (process_dio) 2:
+00:04.520	ID:2	Updated object of type: 3
+00:04.520	ID:3	ahora hay 4 objetos
+00:04.523	ID:2	tipo: 4, aggreg tipo: 2
+00:04.524	ID:4	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.526	ID:2	Updated object of type: 4
+00:04.529	ID:3	recibido DIO de tipo: 7 alto: 0x02, bajo: 0x80  etx: 640= 0x0280
+00:04.529	ID:2	tipo: 5, aggreg tipo: 1
+00:04.529	ID:4	tipo: 3, aggreg tipo: 0
+00:04.532	ID:2	Updated object of type: 5
+00:04.532	ID:4	Updated object of type: 3
+00:04.534	ID:3	leido de DIO type: 7, flags: 0x0001, length: 2
+00:04.535	ID:2	tipo: 7, aggreg tipo: 0
+00:04.535	ID:4	tipo: 4, aggreg tipo: 2
+00:04.538	ID:2	etx enlace padre: 640
+00:04.538	ID:4	Updated object of type: 4
+00:04.538	ID:3	mc dio justo despues de rellenarlo:
+00:04.541	ID:2	Updated object of type: 7
+00:04.541	ID:4	tipo: 5, aggreg tipo: 1
+00:04.544	ID:4	Updated object of type: 5
+00:04.545	ID:3	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.547	ID:4	tipo: 7, aggreg tipo: 0
+00:04.550	ID:4	etx enlace padre: 640
+00:04.551	ID:3	mc dio final dio_input, antes process_dio:
+00:04.553	ID:4	Updated object of type: 7
+00:04.557	ID:3	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.560	ID:3	mc dio principio process_dio:
+00:04.567	ID:3	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.569	ID:3	mc dio (process_dio) 2:
+00:04.576	ID:3	num obj: 4 || puntero4:0x2952 || tipos:3, 4, 5, 7
+00:04.580	ID:3	tipo: 3, aggreg tipo: 0
+00:04.583	ID:3	Updated object of type: 3
+00:04.586	ID:3	tipo: 4, aggreg tipo: 2
+00:04.589	ID:3	Updated object of type: 4
+00:04.592	ID:3	tipo: 5, aggreg tipo: 1
+00:04.595	ID:3	Updated object of type: 5
+00:04.598	ID:3	tipo: 7, aggreg tipo: 0
+00:04.601	ID:3	etx enlace padre: 640
+00:04.604	ID:3	Updated object of type: 7
