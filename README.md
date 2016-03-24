@@ -6,4 +6,4 @@ Contiki 2.7 with RPL modified for router containers described in RFC6551
 - Simulates battery consumption so it can be used too as metric/constraint.
 - Can be extracted a lot of data for graphics. 
 
-I just modified Contiki and made something that I hope could be useful for someone, so I've uploaded all this. I know I don't follow the rules to make a fork of Contiki and the Wiki is poor... 
+I just modified Contiki and made something that I hope could be useful for someone, so I've uploaded all this. I know I don't follow the rules to make a fork of Contiki and the Wiki is poor... but if it's useful for you, just let me know.
